@@ -1,0 +1,5 @@
+profiles: 
+  production: 
+    base_url: http://datasetio.github.com/atlas-schema 
+    deploy: 
+      host: github_pages 
