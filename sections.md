@@ -13,7 +13,7 @@ The first part of the schema is a typical header, this is where we define the ve
 
 <pre><code data-language="javascript">
     {
-      "atlasVersion":"1.0.0",
+      "atlasVersion":"#{site.release.atlas_version}",
       "namespace":"com.mycompany",
       "name":"MySchema",
       "documentation":"A description of the purpose of my schema",

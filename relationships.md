@@ -5,45 +5,107 @@ title: Atlas Schema / Relationships
 
 ### Relationships
 
-Nodes are simple structures,  they can either be a point of data or a container (in the form of a node type DataGroup),  you can see this in the [Nodes](nodes.html) part of the documentation.
+In the [Nodes](nodes.html) section we walked through a simple example of how a node can build a relationship and also how a express cardinality on the relationship.
 
-The **relationships** attribute is under a node and has a list of relationship instances,  each of these has a targetNodeName and can have a name and a cardinality.
+From that brief introduction you have probably started to see that all Nodes are abstract and there is no difference between a node that holds a value and one that does not.  In this section we aim to add more detail to how more complex node structures are set-up to model other types of relationship.
 
-<pre><code data-language="javascript">
+### One-to-One
+
+The simpliest of all relationships is the one-to-one relationship,  you can specify this from any direction and the opposing direction will be implied.  For example
+
+<pre><code data-language="java">
     {
       ...
-	  "relationships":[{
-	      "targetNodeName":"Address",
-	      "cardinality":"1.."
-	  	},
+      {
+        "name":"Person",
+        "relationships" : ["Name","Address"]
+      },
       ....
     }
 </code></pre>
 
-In order to understand how relationships work it is best to think about the 
+In this case we just simply specify the name of the node that we want to use,  we don't care if the node is one that holds a value or another grouping of values,  because nodes are just nodes.
 
+### One-to-Many
 
-#### Target Node Name
+A one to many simply includes the [ ] and the range for the cardinality,  therefore we say there can 0 to unbounded instances of the relationship,  therefore is it [0..]
 
-This refers to the name of the node in this schema to which this node, the one under which we have the relationships attribute is related.
+<pre><code data-language="java">
+    {
+      ...
+      {
+        "name":"Person",
+        "relationships" : ["Name","Address[0..]"]
+      },
+      ....
+    }
+</code></pre>
 
-#### Cardinality
+### Many-to-Many
 
-However,  much of the understanding of the structure of a schema is based on the relationships that exist between nodes.  In Atlas we provide a number of relationship types that can exist between to nodes.  Note that all nodes have individual relationships with other nodes,  thus they must always be declared from both directions.
+If you have a many to many, for example a person can have a relationship with many organizations and an organization has many people then you can use the cardinality to express that.
 
-Lets walk through each of the available relationship cardinalities.
+<pre><code data-language="java">
+    {
+      ...
+      {
+        "name":"Person",
+        "relationships" : ["Name","Organization[0..]"]
+      },
+      {
+        "name":"Organization",
+        "relationships" : ["Name","Person[0..]"]
+      },
+      ....
+    }
+</code></pre>
 
-#### HasOne
+In an Atlas schema you don't need to create a Node in the middle unless you want to add additional information for the relationship,  for example if you wanted to know the Start and End dates for people in an organization, then you would need to add a new node in the middle and provide a meaningful name.
 
-Coming soon....
+<pre><code data-language="java">
+    {
+      ...
+      {
+        "name":"Person",
+        "relationships" : ["Name","Employment[0..]"]
+      },
+      {
+        "name":"Organization",
+        "relationships" : ["Name","Employment[0..]"]
+      },
+      {
+        "name":"Employment",
+        "relationships" : ["StartDate","EndDate"]
+      },
+      ....
+    }
+</code></pre>
 
-#### BelongsTo
+### Multiple Relationships
 
-Coming soon....
+Another case where you would need to introduce a new node is where one node has more than one relationship with a second node,  for example lets say that we have a person who has two Addresses,  the first is a work address and the second is a home address.  You could model this as two relationships between a Person and an Address,  but in order to identify them you would need to introduce two new nodes.  For example:
 
-#### HasMany
-
-
-
+<pre><code data-language="java">
+    {
+      ...
+      {
+        "name":"Person",
+        "relationships" : ["Name","HomeAddress","WorkAddress"]
+      },
+      {
+        "name":"Address",
+        "relationships" : ["Street","ZipCode"]
+      },
+      {
+        "name":"HomeAddress",
+        "relationships" : ["Address"]
+      },
+      {
+        "name":"WorkAddress",
+        "relationships" : ["Address"]
+      },
+      ....
+    }
+</code></pre>
 
 
