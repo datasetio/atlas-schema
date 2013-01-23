@@ -1,15 +1,8 @@
 ---
 layout: base
-title: Atlas Schema / Relationships
+title: Atlas Schema / Features
 ---
 
 ### Features
 
 More coming soon....
-
-
-   
-
-
-
-
