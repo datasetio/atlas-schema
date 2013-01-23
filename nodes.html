@@ -26,13 +26,13 @@
   </head>
   <body>
     <div class='container'>
-      <div class='row' style='margin-bottom:50px'>
+      <div class='row' style='margin-bottom:10px'>
         <div class='span2 offset1'>
           <img src='img/atlas.png' width='150px' />
         </div>
         <div class='span7'>
-          <h1>Atlas Schema Definition</h1>
-          <h4>v1.0.0</h4>
+          <h1 style='margin-top:38px'>Atlas Schema Definition</h1>
+          <h4 style='margin-top:-10px'>v1.0.0</h4>
         </div>
       </div>
       <div class='row'>
@@ -63,8 +63,91 @@
         </div>
         <div class='span9'>
           <h3>Nodes</h3>
-          
-          <p>More coming soon....</p>
+
+<p>A node is a representation of a point of data,  that can be something like a single value or it can be a group.</p>
+
+<p>For example a node might be <strong>FirstName</strong>, and another node might be <strong>Person</strong>.  In this case a <strong>FirstName</strong> has a relationship to a <strong>Person</strong>.</p>
+
+<p>In Atlas everything is a Node and every node has relationships to other nodes,  this means we aren't structure like a typical database world with tables and columns - though our model can be fairly easily converted to this type of structure.</p>
+
+<p>In the Atlas schema you define a list of nodes at the top level,  lets take a look at one of the node definitions and look at what it has in it.</p>
+
+<pre><code data-language="javascript">&#x000A;    {&#x000A;      ...&#x000A;      {&#x000A;        "name":"FirstName",&#x000A;        "description":"First Name",&#x000A;        "documentation":"The first name of an individual.",&#x000A;        "nodeType":{&#x000A;          "dataType":"String"&#x000A;        },&#x000A;        "relationships":[],&#x000A;        "sampleValue":"Philip"&#x000A;      },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
+
+
+<p>The structure of a node is fairly simple,  lets walk through each of the properties:</p>
+
+<h4>Name</h4>
+
+<p>The name of the node,  this is the symbolic name which means that is should be a simple value have no spaces or special characters in it.</p>
+
+<h4>Description</h4>
+
+<p>This is the description,  typically this is the longer version of the name including spaces and any special characters.</p>
+
+<h4>Documentation</h4>
+
+<p>This is the documentation for the node.  Commonly this is where more information is provided to describe the meaning of the node,  often putting it in some context to allow deeper understanding.</p>
+
+<h4>Node Type</h4>
+
+<p>The node type can be a range of values to describe the node's data.  The available types are:</p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>String</td>
+      <td>A sequence of characters</td>
+    </tr>
+    <tr>
+      <td>Date</td>
+      <td>A date with no time portion</td>
+    </tr>
+    <tr>
+      <td>DateTime</td>
+      <td>A date and time with timezone information</td>
+    </tr>
+    <tr>
+      <td>Number</td>
+      <td>A number that has no decimal or float component</td>
+    </tr>
+    <tr>
+      <td>Decimal</td>
+      <td>A decimal number</td>
+    </tr>
+    <tr>
+      <td>Float</td>
+      <td>A floating point number</td>
+    </tr>
+    <tr>
+      <td>Enumeration</td>
+      <td>A string that has a domain of values that are valid</td>
+    </tr>
+    <tr>
+      <td>Boolean</td>
+      <td>A true or false</td>
+    </tr>
+    <tr>
+      <td>DataGroup</td>
+      <td>A data group is where a node is a grouping of other nodes and has not explicit value only relationships to other nodes</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<h4>Relationships</h4>
+
+<p>A list of the relationships that this node has to other nodes in this schema,  see the <a href="relationships.html">Relationships</a> guide for more information on how they work.</p>
+
+<h4>Sample Value</h4>
+
+<p>A simple sample value for the field - this allows people to quickly gather context for node by seeing an example of data it might hold.</p>
         </div>
       </div>
     </div>
