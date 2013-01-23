@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang='en'>
+  <head>
+    <meta charset='utf-8'>
+      <title>Atlas Schema / Sections</title>
+      <meta content='width=device-width, initial-scale=1.0' name='viewport'>
+        <meta content='' name='description'>
+          <meta content='' name='author'>
+            <!-- Le styles -->
+            <link href='css/bootstrap.css' rel='stylesheet' />
+            <link href='css/blackboard.css' rel='stylesheet'>
+              <style type='text/css'>
+                /*<![CDATA[*/
+                  body {
+                    padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+                  }
+                    %link{:href => "css/bootstrap-responsive.css", :rel => "stylesheet"}
+                  / HTML5 shim, for IE6-8 support of HTML5 elements
+                /*]]>*/
+              </style>
+            </link>
+          </meta>
+        </meta>
+      </meta>
+    </meta>
+  </head>
+  <body>
+    <div class='container'>
+      <div class='row' style='margin-bottom:10px'>
+        <div class='span2 offset1'>
+          <img src='img/atlas.png' width='150px' />
+        </div>
+        <div class='span7'>
+          <h1 style='margin-top:38px'>Atlas Schema Definition</h1>
+          <h4 style='margin-top:-10px'>v1.1.0</h4>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='span3' style='margin-top:17px'>
+          <div class='well'>
+            <ul class='nav nav-list'>
+              <li class='nav-header'></li>
+              <li class=''>
+                <a href='index.html'>Introduction</a>
+              </li>
+              <li class='active'>
+                <a href='sections.html'>Sections</a>
+              </li>
+              <li class=''>
+                <a href='nodes.html'>Nodes</a>
+              </li>
+              <li class=''>
+                <a href='relationships.html'>Relationships</a>
+              </li>
+              <li class=''>
+                <a href='features.html'>Features</a>
+              </li>
+            </ul>
+          </div>
+          <a href='http://dataset.io'>
+            <img src='img/dataset-io-small.png' />
+          </a>
+        </div>
+        <div class='span9'>
+          <h2>Sections</h2>
+
+<p>An Atlas Schema is divided into a number of basic sections,  these sections are in place to allow us to capture different information regarding both the model we are building but also meta-data around that model that is useful when a person wants to consume then model.  Lets take a look at the different sections:</p>
+
+<h3>Header</h3>
+
+<p>The first part of the schema is a typical header, this is where we define the version of the Atlas schema as well as some top level information regarding this schema.</p>
+
+<pre><code data-language="javascript">&#x000A;    {&#x000A;      "atlasVersion":"1.1.0",&#x000A;      "namespace":"com.mycompany",&#x000A;      "name":"MySchema",&#x000A;      "documentation":"A description of the purpose of my schema",&#x000A;      "version":"1.0.0",&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
+
+
+<h4>Atlas Version</h4>
+
+<p>This describes the version of Atlas that was used to define this schema</p>
+
+<h4>Namespace</h4>
+
+<p>The namespace is based on the concept of grouping schema together into a logical heirarchy.  The namespace is used to completely reference a schema, for example if your schema is MySchema and the namespace is com.mycompany then your fully qualified schema name is com.mycompany.MySchema.</p>
+
+<p>This can be used when linking to other schema and should always be included, and a namespace can not contain spaces or special characters.</p>
+
+<h4>Name</h4>
+
+<p>The name of your schema,  this should be a simple name with only letters and characters and no spaces or special characters.</p>
+
+<h4>Documentation</h4>
+
+<p>This should provide a definition for the purpose or use of your schema,  for example, "A representation of customers and their related addresses".</p>
+
+<h4>Version</h4>
+
+<p>This is the version for your schema representation,  you should always keep version numbering in place for your data schema to ensure that people are able to track changes.  We strongly recommend looking at <a href="http://semver.org/">Semantic Versioning</a>.</p>
+
+<h3>Organization</h3>
+
+<pre><code data-language="javascript">&#x000A;    {&#x000A;      ...&#x000A;      "organization":{&#x000A;        "name":"My Company",&#x000A;        "webSiteUrl":"http://mycompany.com",&#x000A;        "logoUrl":"http://mycompany.com/awesome-logo.png"&#x000A;      } &#x000A;      ....&#x000A;    }&#x000A;</code></pre>
+
+
+<p>It is important when sharing a schema to tell the world a little about who you are,  the organization allow you to share the details of the company, organization or foundation that is sharing this information.  Typical information he hold here is:</p>
+
+<ul>
+<li>Name - The name of the organization</li>
+<li>webSiteUrl - The URL of the organization's web presence</li>
+<li>logoUrl - The URL of a logo (this is used when building site documentation)</li>
+</ul>
+
+
+<h3>Contributors</h3>
+
+<pre><code data-language="javascript">&#x000A;    {&#x000A;      ...&#x000A;      "contributors":[{&#x000A;          "name":"Philip Dodds",&#x000A;          "twitter":"philipdodds",&#x000A;          "webSiteUrl":"http://dataset.io",&#x000A;          "organization":"Dataset IO"&#x000A;        },{&#x000A;          "name":"Garry Wright",&#x000A;          "webSiteUrl":"http://dataset.io",&#x000A;          "organization":"Dataset IO"&#x000A;        }&#x000A;        ...&#x000A;      ],&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
+
+
+<p>Often we want to share information about the people involved in the definition of a schema,  this brings out the ecosystem that is in involved and allows you to see the people behind the work.</p>
+
+<p>We have a set of attributes which can be shared for a contributor:</p>
+
+<ul>
+<li>Name - The name of the contributor</li>
+<li>Twitter - The twitter handle of the contributor</li>
+<li>webSiteUrl - The URL of the contributor's web presence</li>
+<li>organization - The name of the organization that this contributor represents</li>
+</ul>
+
+
+<h3>License</h3>
+
+<pre><code data-language="javascript">&#x000A;    {&#x000A;      ...&#x000A;      "license":{&#x000A;        "name":"Apache Software License v2.0",&#x000A;        "description":"Apache Software License",&#x000A;        "copyrightNotice":"(C) Copyright 2012 FiMod (http://fimod.org)",&#x000A;        "webUrl":"http://www.apache.org/licenses/LICENSE-2.0.html"&#x000A;      },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
+
+
+<p>Since some of the schema's that are used with Atlas are planned to be open source we can also include the license information in the schema definition.  Attributes include:</p>
+
+<ul>
+<li>Name - The license name</li>
+<li>Description - The short description of the license</li>
+<li>CopyrightNotice - A copyright right notice that should be provided with the schema</li>
+<li>webUrl - A web URL for more information on the schema</li>
+</ul>
+
+
+<h3>Revision Control System</h3>
+
+<pre><code data-language="javascript">&#x000A;    {&#x000A;      ...&#x000A;      "revisionControlSystem":{&#x000A;        "system":"github",&#x000A;        "webUrl":"https://github.com/fimod/lei"&#x000A;      },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
+
+
+<p>This allows the schema to include metadata around where the revision control system that is used for the schema is housed.</p>
+
+<ul>
+<li>System - Currently we only support github as a revision control system</li>
+<li>webUrl - The website url where you can find the github repository</li>
+</ul>
+
+
+<h3>Issue Tracker</h3>
+
+<pre><code data-language="javascript">&#x000A;    {&#x000A;      ...&#x000A;      "issueTracker":{&#x000A;        "system":"github",&#x000A;        "webUrl":"https://github.com/fimod/lei/issues"&#x000A;      },  &#x000A;      ....&#x000A;    }&#x000A;</code></pre>
+
+
+<p>This allows the schema to include metadata around where the issue tracking system that is used for the schema is housed.</p>
+
+<ul>
+<li>System - Currently we only support github as an issue tracker</li>
+<li>webUrl - The website url where you can find the issue tracker</li>
+</ul>
+
+
+<h3>Nodes</h3>
+
+<pre><code data-language="javascript">&#x000A;    {&#x000A;      ...&#x000A;      "nodes":[{&#x000A;        "name":"People",&#x000A;        "description":"People",&#x000A;        "documen....&#x000A;    }&#x000A;</code></pre>
+
+
+<p>The heart of the schema is its definition of <strong>nodes</strong>, see <a href="nodes.html">Nodes</a> for more information on how this is structured.</p>
+        </div>
+      </div>
+    </div>
+    <script src='js/jquery-1.9.0.min.js' type='text/javascript'></script>
+    <script src='js/d3.v3.js' type='text/javascript'></script>
+    <script src='js/rainbow-custom.min.js' type='text/javascript'></script>
+    <script type='text/javascript'>
+      //<![CDATA[
+        $(document).ready(function() {
+            function showHiddenParagraphs() {
+                $("p.hidden").fadeIn(500);
+            }
+            setTimeout(showHiddenParagraphs, 1000);
+        });
+      //]]>
+    </script>
+  </body>
+</html>
