@@ -62,7 +62,7 @@ The core nodes are a set of Nodes defined in an internal Schema which is at the 
         "name":"Name",
         "description":"A Name",
         "documentation":"A word or collection of words used to identify something",
-        "extends" : "io.dataset.atlas.type.String"
+        "extend" : "io.dataset.atlas.type.String"
       },
       ....
     }
@@ -89,7 +89,7 @@ Lets add another couple of nodes to our world and see what happens,  First lets 
         "name":"ZipCode",
         "description":"Zip Code",
         "documentation":"A US Zip Code",
-        "extends" : "io.dataset.atlas.type.String"
+        "extend" : "io.dataset.atlas.type.String"
       },
       {
         "name":"Address",
@@ -136,7 +136,7 @@ When a node is going to hold a value it is sometimes helpful to provide a sample
       "name":"Name",
       "description":"A Name",
       "documentation":"A word or collection of words used to identify something",
-      "extends" : "io.dataset.atlas.type.String"
+      "extend" : "io.dataset.atlas.type.String"
       "sampleValue" : "Philip"
     },
       ....
