@@ -32,7 +32,7 @@
         </div>
         <div class='span7'>
           <h1 style='margin-top:38px'>Atlas Schema Definition</h1>
-          <h4 style='margin-top:-10px'>v1.0.0</h4>
+          <h4 style='margin-top:-10px'>v1.1.0</h4>
         </div>
       </div>
       <div class='row'>
@@ -66,20 +66,18 @@
 
 <p>Nodes are simple structures,  they can either be a point of data or a container (in the form of a node type DataGroup),  you can see this in the <a href="nodes.html">Nodes</a> part of the documentation.</p>
 
-<p>The <strong>relationships</strong> attribute is under a node and has a list of relationship instances,  each of these has a targetNodeName, a name and a cardinality.</p>
+<p>The <strong>relationships</strong> attribute is under a node and has a list of relationship instances,  each of these has a targetNodeName and can have a name and a cardinality.</p>
 
-<pre><code data-language="javascript">&#x000A;    {&#x000A;      ...&#x000A;      "relationships":[{&#x000A;          "targetNodeName":"Address",&#x000A;          "name":"Housed At",&#x000A;          "cardinality":"BelongsTo"&#x000A;        },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
+<pre><code data-language="javascript">&#x000A;    {&#x000A;      ...&#x000A;      "relationships":[{&#x000A;          "targetNodeName":"Address",&#x000A;          "cardinality":"1.."&#x000A;        },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
 
+
+<p>In order to understand how relationships work it is best to think about the</p>
 
 <h4>Target Node Name</h4>
 
 <p>This refers to the name of the node in this schema to which this node, the one under which we have the relationships attribute is related.</p>
 
-<h4>Name</h4>
-
-<p>This is the name of the relationship,  typically this is used to describe the relationships that exists between these nodes from the direction of the current node to the target node.</p>
-
-<h4>Relationship Cardinalities</h4>
+<h4>Cardinality</h4>
 
 <p>However,  much of the understanding of the structure of a schema is based on the relationships that exist between nodes.  In Atlas we provide a number of relationship types that can exist between to nodes.  Note that all nodes have individual relationships with other nodes,  thus they must always be declared from both directions.</p>
 
@@ -98,6 +96,7 @@
       </div>
     </div>
     <script src='js/jquery-1.9.0.min.js' type='text/javascript'></script>
+    <script src='js/d3.v3.js' type='text/javascript'></script>
     <script src='js/rainbow-custom.min.js' type='text/javascript'></script>
     <script type='text/javascript'>
       //<![CDATA[

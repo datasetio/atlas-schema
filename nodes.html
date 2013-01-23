@@ -32,7 +32,7 @@
         </div>
         <div class='span7'>
           <h1 style='margin-top:38px'>Atlas Schema Definition</h1>
-          <h4 style='margin-top:-10px'>v1.0.0</h4>
+          <h4 style='margin-top:-10px'>v1.1.0</h4>
         </div>
       </div>
       <div class='row'>
@@ -64,94 +64,68 @@
         <div class='span9'>
           <h3>Nodes</h3>
 
-<p>A node is a representation of a point of data,  that can be something like a single value or it can be a group.</p>
+<p>A node is a representation of a peice of understanding around data,  this can be almost anything and is purposefully abstract.  A node on its only simply represents an item of knowlegde,  for example you might know that you have a person.  Therefore you would create a Person.</p>
 
-<p>For example a node might be <strong>FirstName</strong>, and another node might be <strong>Person</strong>.  In this case a <strong>FirstName</strong> has a relationship to a <strong>Person</strong>.</p>
-
-<p>In Atlas everything is a Node and every node has relationships to other nodes,  this means we aren't structure like a typical database world with tables and columns - though our model can be fairly easily converted to this type of structure.</p>
-
-<p>In the Atlas schema you define a list of nodes at the top level,  lets take a look at one of the node definitions and look at what it has in it.</p>
-
-<pre><code data-language="javascript">&#x000A;    {&#x000A;      ...&#x000A;      {&#x000A;        "name":"FirstName",&#x000A;        "description":"First Name",&#x000A;        "documentation":"The first name of an individual.",&#x000A;        "nodeType":{&#x000A;          "dataType":"String"&#x000A;        },&#x000A;        "relationships":[],&#x000A;        "sampleValue":"Philip"&#x000A;      },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
+<pre><code data-language="javascript">&#x000A;    {&#x000A;      ...&#x000A;      {&#x000A;        "name":"Person",&#x000A;        "description":"A Person",&#x000A;        "documentation":"A human being"&#x000A;      },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
 
 
-<p>The structure of a node is fairly simple,  lets walk through each of the properties:</p>
+<p>Or you might decide that you want to have a Name.</p>
 
-<h4>Name</h4>
-
-<p>The name of the node,  this is the symbolic name which means that is should be a simple value have no spaces or special characters in it.</p>
-
-<h4>Description</h4>
-
-<p>This is the description,  typically this is the longer version of the name including spaces and any special characters.</p>
-
-<h4>Documentation</h4>
-
-<p>This is the documentation for the node.  Commonly this is where more information is provided to describe the meaning of the node,  often putting it in some context to allow deeper understanding.</p>
-
-<h4>Node Type</h4>
-
-<p>The node type can be a range of values to describe the node's data.  The available types are:</p>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>String</td>
-      <td>A sequence of characters</td>
-    </tr>
-    <tr>
-      <td>Date</td>
-      <td>A date with no time portion</td>
-    </tr>
-    <tr>
-      <td>DateTime</td>
-      <td>A date and time with timezone information</td>
-    </tr>
-    <tr>
-      <td>Number</td>
-      <td>A number that has no decimal or float component</td>
-    </tr>
-    <tr>
-      <td>Decimal</td>
-      <td>A decimal number</td>
-    </tr>
-    <tr>
-      <td>Float</td>
-      <td>A floating point number</td>
-    </tr>
-    <tr>
-      <td>Enumeration</td>
-      <td>A string that has a domain of values that are valid</td>
-    </tr>
-    <tr>
-      <td>Boolean</td>
-      <td>A true or false</td>
-    </tr>
-    <tr>
-      <td>DataGroup</td>
-      <td>A data group is where a node is a grouping of other nodes and has not explicit value only relationships to other nodes</td>
-    </tr>
-  </tbody>
-</table>
+<pre><code data-language="javascript">&#x000A;    {&#x000A;      ...&#x000A;      {&#x000A;        "name":"Name",&#x000A;        "description":"A Name",&#x000A;        "documentation":"A word or collection of words used to identify something"&#x000A;      },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
 
 
-<h4>Relationships</h4>
+<p>And then you might decide that you want a Person to have a name,  thus you would create a relationship between a person and a name.</p>
 
-<p>A list of the relationships that this node has to other nodes in this schema,  see the <a href="relationships.html">Relationships</a> guide for more information on how they work.</p>
+<pre><code data-language="javascript">&#x000A;    {&#x000A;      ...&#x000A;      {&#x000A;        "name":"Person",&#x000A;        "description":"A Person",&#x000A;        "documentation":"A human being",&#x000A;        "relationships" : ["Name"]&#x000A;      },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
 
-<h4>Sample Value</h4>
 
-<p>A simple sample value for the field - this allows people to quickly gather context for node by seeing an example of data it might hold.</p>
+<p>At this level you are able to build up an abstract representation of the understand you have about the data you want to model.  Typically however you will want to start providing more information on the structure of this data as you do,  often it starts when we try to specify what type a node might be.</p>
+
+<p>In this sense we use the term type to reference if something is a string of characters, a date, a number etc.  We do this so that we are able to understand how to move things out to database technologies,  however in Atlas we do not have a fixed set of base types (sometimes call Primitives), since everything is a Node.   Therefore if you want to specify that Name, for example, is a String type you would use one of the Dataset IO core nodes.</p>
+
+<p>The core nodes are a set of Nodes defined in an internal Schema which is at the heart of Atlas,  you can see the schema here.  We have defined a set of basic Nodes that represent the core types at the heart of most database technologies and you can use them in your Nodes by extending them.</p>
+
+<pre><code data-language="javascript">&#x000A;    {&#x000A;      ...&#x000A;      {&#x000A;        "name":"Name",&#x000A;        "description":"A Name",&#x000A;        "documentation":"A word or collection of words used to identify something",&#x000A;        "extends" : "io.dataset.atlas.type.String"&#x000A;      },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
+
+
+<p>By including this core type we are able to not see that the Name is a String, since our export technology is aware of these core types you are able to then generate SQL schemas or XML schemas which would port this String representation into the appropriate type.</p>
+
+<h3>Relationship Cardinality</h3>
+
+<p>In our earlier example we had a simple relationship between a Person and a Name,  in this case a Person has one name.  The default when we specify a relationship is that there is a single instance of the relationship.  However,  often we might have situations where it isn't a one to one relationship.</p>
+
+<p>Lets add another couple of nodes to our world and see what happens,  First lets create some parts of an Address and then create an Address.</p>
+
+<pre><code data-language="java">&#x000A;    {&#x000A;      ...&#x000A;      {&#x000A;        "name":"Street",&#x000A;        "description":"Street Name",&#x000A;        "documentation":"The name of a street",&#x000A;        "extends" : "io.dataset.atlas.type.String"&#x000A;      },&#x000A;      {&#x000A;        "name":"ZipCode",&#x000A;        "description":"Zip Code",&#x000A;        "documentation":"A US Zip Code",&#x000A;        "extends" : "io.dataset.atlas.type.String"&#x000A;      },&#x000A;      {&#x000A;        "name":"Address",&#x000A;        "description":"Address",&#x000A;        "documentation":"An addresss",&#x000A;        "relationships" : ["Street","ZipCode"]&#x000A;      },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
+
+
+<p>Above we have created a basic model to represent a Street and a Zipcode (both are extended from our core String node) and then an Address which has one Street and one ZipCode.  Now lets say that we want to show that a Person can have zero or many Addresses.  We would need to add Address to the relationships on Person.</p>
+
+<pre><code data-language="java">&#x000A;    {&#x000A;      ...&#x000A;      {&#x000A;        "name":"Person",&#x000A;        "description":"A Person",&#x000A;        "documentation":"A human being",&#x000A;        "relationships" : ["Name","Address[0..]"]&#x000A;      },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
+
+
+<p>Note that now on the Address in the relationships we include a classifier which highlights the cardinality of the relationship - in this case [0..].  Atlas uses this Cardinality to represent that there can be 0 to (..) any number of instances of Address related to Person,  this would typically be referred to as a one-to-many relationship.</p>
+
+<p>Cardinality definitions in Atlas can be shown in a few different ways.  For example:</p>
+
+<ul>
+<li>[1..10] means that must be at least one and there can be a maximum of 10</li>
+<li>[0..] there can be no relationship or any number of relationships</li>
+<li>[0..1] there can be no relationship or there can be only one,  this is the default</li>
+<li>[1..1] there must be at one and only one relationship</li>
+</ul>
+
+
+<h3>Sample Values</h3>
+
+<p>When a node is going to hold a value it is sometimes helpful to provide a sample value, for example:</p>
+
+<pre><code data-language="java">&#x000A;    {&#x000A;      ...&#x000A;      {&#x000A;      "name":"Name",&#x000A;      "description":"A Name",&#x000A;      "documentation":"A word or collection of words used to identify something",&#x000A;      "extends" : "io.dataset.atlas.type.String"&#x000A;      "sampleValue" : "Philip"&#x000A;    },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
         </div>
       </div>
     </div>
     <script src='js/jquery-1.9.0.min.js' type='text/javascript'></script>
+    <script src='js/d3.v3.js' type='text/javascript'></script>
     <script src='js/rainbow-custom.min.js' type='text/javascript'></script>
     <script type='text/javascript'>
       //<![CDATA[
