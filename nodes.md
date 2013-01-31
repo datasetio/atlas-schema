@@ -52,7 +52,7 @@ At this level you are able to build up an abstract representation of the underst
 
 In this sense we use the term type to reference if something is a string of characters, a date, a number etc.  We do this so that we are able to understand how to move things out to database technologies,  however in Atlas we do not have a fixed set of base types (sometimes call Primitives), since everything is a Node.   Therefore if you want to specify that Name, for example, is a String type you would use one of the Dataset IO core nodes.
 
-The core nodes are a set of Nodes defined in an internal Schema which is at the heart of Atlas,  you can see the schema here.  We have defined a set of basic Nodes that represent the core types at the heart of most database technologies and you can use them in your Nodes by extending them.
+The core nodes are a set of Nodes defined in an internal Schema which is at the heart of Atlas,  you can see the schema [here](https://github.com/datasetio/atlas-types/blob/master/schema.json).  We have defined a set of basic Nodes that represent the core types at the heart of most database technologies and you can use them in your Nodes by extending them.
 
 
 <pre><code data-language="javascript">
@@ -83,7 +83,7 @@ Lets add another couple of nodes to our world and see what happens,  First lets 
         "name":"Street",
         "description":"Street Name",
         "documentation":"The name of a street",
-        "extends" : "io.dataset.atlas.type.String"
+        "extend" : "io.dataset.atlas.type.String"
       },
       {
         "name":"ZipCode",
@@ -124,6 +124,12 @@ Cardinality definitions in Atlas can be shown in a few different ways.  For exam
 * [0..] there can be no relationship or any number of relationships
 * [0..1] there can be no relationship or there can be only one,  this is the default
 * [1..1] there must be at one and only one relationship
+
+### Datums
+
+A node can optionaly hold the flag to determine if it is a datum.  Datum is where a node can hold a value.  By default a node is not defined as a datum since it is an abstract representation of something,  however you can specify datum = true on the node in order to make it capable of holding a value.
+
+Note that typically when modeling you would use the extend to inherit the functionality of an existing mode, often from the base Atlas types.  If you extend something like io.dataset.atlas.type.String then your node will be a datum because io.data.atlas.type.String is defined as a datum.
 
 ### Sample Values
 
