@@ -2,7 +2,7 @@
 <html lang='en'>
   <head>
     <meta charset='utf-8'>
-      <title>Atlas Schema / Introduction</title>
+      <title>Atlas Schema / Characteristics</title>
       <meta content='width=device-width, initial-scale=1.0' name='viewport'>
         <meta content='' name='description'>
           <meta content='' name='author'>
@@ -40,7 +40,7 @@
           <div class='well'>
             <ul class='nav nav-list'>
               <li class='nav-header'></li>
-              <li class='active'>
+              <li class=''>
                 <a href='index.html'>Introduction</a>
               </li>
               <li class=''>
@@ -52,7 +52,7 @@
               <li class=''>
                 <a href='relationships.html'>Relationships</a>
               </li>
-              <li class=''>
+              <li class='active'>
                 <a href='characteristics.html'>Characteristics</a>
               </li>
               <li class=''>
@@ -65,13 +65,24 @@
           </a>
         </div>
         <div class='span9'>
-          <h3>Introduction</h3>
+          <h3>Characteristics</h3>
 
-<p>In the past modelling data was constrainted by the most obvious technology, and it was RDBMS or Relational Database Management Systems.  While RDBMS are still an excellent way of modelling data now it is no longer the only way to model it,  and commonly it is combined with other forms for other types of storage such as XML for files or technologies from Avro for archival.</p>
+<p>On a node we also support the setting of characteristics,  this defines certain additional information such a length, max/min values and also enumerations.</p>
 
-<p>At Dataset IO we wanted to provide an open way to model data structures,  one that would allow us to go back to a type of persistence container (such as a database) but also to be able to present the structure in a way that can be modeled in other persistence technologies.   Also we wanted to capture more than the raw structure,  we wanted to provide other helpful information such as example values,  potential sources of the data and features that data might want (such as user audited or time sensitive).  That is why we created <strong>Atlas</strong>.</p>
+<p>Below we can see an example of additional characteristics being applied to a node.</p>
 
-<p>An Atlas schema is a JSON document that can be used to capture information about the structured or semi-structured data.  In this documentation we will look at some of the core parts.</p>
+<pre><code data-language="java">&#x000A;    {&#x000A;      ...&#x000A;      {&#x000A;            "name": "AddressType",&#x000A;            "documentation": "A collection of characters",&#x000A;            "extend" : "io.dataset.atlas.type.String"&#x000A;            "characteristics": {&#x000A;                "length": "25",&#x000A;                "enumeration" : [ "Home", "Work" ]&#x000A;            }&#x000A;        },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
+
+
+<p>The available characteristics are:</p>
+
+<ul>
+<li>length - the length of the node datum</li>
+<li>pattern - a regular expression that is used to validate the node datum</li>
+<li>enumeration - the domain of values valid for the node datum</li>
+<li>max - a numerical value that is the maximum valid value for the node datum</li>
+<li>min - a numerical value that is the minimum valid value for the node datum</li>
+</ul>
         </div>
       </div>
     </div>

@@ -52,6 +52,9 @@
               <li class=''>
                 <a href='relationships.html'>Relationships</a>
               </li>
+              <li class=''>
+                <a href='characteristics.html'>Characteristics</a>
+              </li>
               <li class='active'>
                 <a href='features.html'>Features</a>
               </li>
@@ -63,8 +66,19 @@
         </div>
         <div class='span9'>
           <h3>Features</h3>
-          
-          <p>More coming soon....</p>
+
+<p>Atlas provides a extensible way to add additional metadata to a node,  this is captures in terms of features.</p>
+
+<p>Basically features are in essence of map of Strings,  therefore you can put anything in a feature.  Tooling has the ability to use these features to control their behaviour.</p>
+
+<p>For example lets take a look at the definition of io.dataset.atlas.type.String</p>
+
+<pre><code data-language="java">&#x000A;    {&#x000A;      ...&#x000A;      {&#x000A;            "name": "String",&#x000A;            "documentation": "A collection of characters",&#x000A;            "datum": true,&#x000A;            "features": {&#x000A;                "io.dataset.atlas.xml.xmlType": "xs:string",&#x000A;                "io.dataset.atlas.java.javaType": "String",&#x000A;                "io.dataset.atlas.avro.avroType": "String"&#x000A;            }&#x000A;        },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
+
+
+<p>Here we see some features for the node String, these are used by the Atlas toolchain when we go to build DDL, XSD and also Avro schemas based on our Atlas Schema.</p>
+
+<p>You are able to add more of these features if you are looking for an extension point to the node to capture additional metadata.</p>
         </div>
       </div>
     </div>

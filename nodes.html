@@ -53,6 +53,9 @@
                 <a href='relationships.html'>Relationships</a>
               </li>
               <li class=''>
+                <a href='characteristics.html'>Characteristics</a>
+              </li>
+              <li class=''>
                 <a href='features.html'>Features</a>
               </li>
             </ul>
@@ -83,9 +86,9 @@
 
 <p>In this sense we use the term type to reference if something is a string of characters, a date, a number etc.  We do this so that we are able to understand how to move things out to database technologies,  however in Atlas we do not have a fixed set of base types (sometimes call Primitives), since everything is a Node.   Therefore if you want to specify that Name, for example, is a String type you would use one of the Dataset IO core nodes.</p>
 
-<p>The core nodes are a set of Nodes defined in an internal Schema which is at the heart of Atlas,  you can see the schema here.  We have defined a set of basic Nodes that represent the core types at the heart of most database technologies and you can use them in your Nodes by extending them.</p>
+<p>The core nodes are a set of Nodes defined in an internal Schema which is at the heart of Atlas,  you can see the schema <a href="https://github.com/datasetio/atlas-types/blob/master/schema.json">here</a>.  We have defined a set of basic Nodes that represent the core types at the heart of most database technologies and you can use them in your Nodes by extending them.</p>
 
-<pre><code data-language="javascript">&#x000A;    {&#x000A;      ...&#x000A;      {&#x000A;        "name":"Name",&#x000A;        "description":"A Name",&#x000A;        "documentation":"A word or collection of words used to identify something",&#x000A;        "extends" : "io.dataset.atlas.type.String"&#x000A;      },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
+<pre><code data-language="javascript">&#x000A;    {&#x000A;      ...&#x000A;      {&#x000A;        "name":"Name",&#x000A;        "description":"A Name",&#x000A;        "documentation":"A word or collection of words used to identify something",&#x000A;        "extend" : "io.dataset.atlas.type.String"&#x000A;      },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
 
 
 <p>By including this core type we are able to not see that the Name is a String, since our export technology is aware of these core types you are able to then generate SQL schemas or XML schemas which would port this String representation into the appropriate type.</p>
@@ -96,7 +99,7 @@
 
 <p>Lets add another couple of nodes to our world and see what happens,  First lets create some parts of an Address and then create an Address.</p>
 
-<pre><code data-language="java">&#x000A;    {&#x000A;      ...&#x000A;      {&#x000A;        "name":"Street",&#x000A;        "description":"Street Name",&#x000A;        "documentation":"The name of a street",&#x000A;        "extends" : "io.dataset.atlas.type.String"&#x000A;      },&#x000A;      {&#x000A;        "name":"ZipCode",&#x000A;        "description":"Zip Code",&#x000A;        "documentation":"A US Zip Code",&#x000A;        "extends" : "io.dataset.atlas.type.String"&#x000A;      },&#x000A;      {&#x000A;        "name":"Address",&#x000A;        "description":"Address",&#x000A;        "documentation":"An addresss",&#x000A;        "relationships" : ["Street","ZipCode"]&#x000A;      },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
+<pre><code data-language="java">&#x000A;    {&#x000A;      ...&#x000A;      {&#x000A;        "name":"Street",&#x000A;        "description":"Street Name",&#x000A;        "documentation":"The name of a street",&#x000A;        "extend" : "io.dataset.atlas.type.String"&#x000A;      },&#x000A;      {&#x000A;        "name":"ZipCode",&#x000A;        "description":"Zip Code",&#x000A;        "documentation":"A US Zip Code",&#x000A;        "extend" : "io.dataset.atlas.type.String"&#x000A;      },&#x000A;      {&#x000A;        "name":"Address",&#x000A;        "description":"Address",&#x000A;        "documentation":"An addresss",&#x000A;        "relationships" : ["Street","ZipCode"]&#x000A;      },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
 
 
 <p>Above we have created a basic model to represent a Street and a Zipcode (both are extended from our core String node) and then an Address which has one Street and one ZipCode.  Now lets say that we want to show that a Person can have zero or many Addresses.  We would need to add Address to the relationships on Person.</p>
@@ -116,11 +119,17 @@
 </ul>
 
 
+<h3>Datums</h3>
+
+<p>A node can optionaly hold the flag to determine if it is a datum.  Datum is where a node can hold a value.  By default a node is not defined as a datum since it is an abstract representation of something,  however you can specify datum = true on the node in order to make it capable of holding a value.</p>
+
+<p>Note that typically when modeling you would use the extend to inherit the functionality of an existing mode, often from the base Atlas types.  If you extend something like io.dataset.atlas.type.String then your node will be a datum because io.data.atlas.type.String is defined as a datum.</p>
+
 <h3>Sample Values</h3>
 
 <p>When a node is going to hold a value it is sometimes helpful to provide a sample value, for example:</p>
 
-<pre><code data-language="java">&#x000A;    {&#x000A;      ...&#x000A;      {&#x000A;      "name":"Name",&#x000A;      "description":"A Name",&#x000A;      "documentation":"A word or collection of words used to identify something",&#x000A;      "extends" : "io.dataset.atlas.type.String"&#x000A;      "sampleValue" : "Philip"&#x000A;    },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
+<pre><code data-language="java">&#x000A;    {&#x000A;      ...&#x000A;      {&#x000A;      "name":"Name",&#x000A;      "description":"A Name",&#x000A;      "documentation":"A word or collection of words used to identify something",&#x000A;      "extend" : "io.dataset.atlas.type.String"&#x000A;      "sampleValue" : "Philip"&#x000A;    },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
         </div>
       </div>
     </div>
