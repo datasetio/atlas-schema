@@ -11,7 +11,7 @@ Basically features are in essence of map of Strings,  therefore you can put anyt
 
 For example lets take a look at the definition of io.dataset.atlas.type.String
 
-<pre><code data-language="java">
+<pre><code data-language="json">
     {
       ...
       {

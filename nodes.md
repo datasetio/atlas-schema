@@ -7,7 +7,7 @@ title: Atlas Schema / Nodes
 
 A node is a representation of a peice of understanding around data,  this can be almost anything and is purposefully abstract.  A node on its only simply represents an item of knowlegde,  for example you might know that you have a person.  Therefore you would create a Person.
 
-<pre><code data-language="javascript">
+<pre><code data-language="jsonscript">
     {
       ...
       {
@@ -21,7 +21,7 @@ A node is a representation of a peice of understanding around data,  this can be
 
 Or you might decide that you want to have a Name.
 
-<pre><code data-language="javascript">
+<pre><code data-language="jsonscript">
     {
       ...
       {
@@ -35,7 +35,7 @@ Or you might decide that you want to have a Name.
 
 And then you might decide that you want a Person to have a name,  thus you would create a relationship between a person and a name.
 
-<pre><code data-language="javascript">
+<pre><code data-language="jsonscript">
     {
       ...
       {
@@ -55,7 +55,7 @@ In this sense we use the term type to reference if something is a string of char
 The core nodes are a set of Nodes defined in an internal Schema which is at the heart of Atlas,  you can see the schema [here](https://github.com/datasetio/atlas-types/blob/master/schema.json).  We have defined a set of basic Nodes that represent the core types at the heart of most database technologies and you can use them in your Nodes by extending them.
 
 
-<pre><code data-language="javascript">
+<pre><code data-language="jsonscript">
     {
       ...
       {
@@ -76,7 +76,7 @@ In our earlier example we had a simple relationship between a Person and a Name,
 
 Lets add another couple of nodes to our world and see what happens,  First lets create some parts of an Address and then create an Address.
 
-<pre><code data-language="java">
+<pre><code data-language="json">
     {
       ...
       {
@@ -103,7 +103,7 @@ Lets add another couple of nodes to our world and see what happens,  First lets 
 
 Above we have created a basic model to represent a Street and a Zipcode (both are extended from our core String node) and then an Address which has one Street and one ZipCode.  Now lets say that we want to show that a Person can have zero or many Addresses.  We would need to add Address to the relationships on Person.
 
-<pre><code data-language="java">
+<pre><code data-language="json">
     {
       ...
       {
@@ -135,7 +135,7 @@ Note that typically when modeling you would use the extend to inherit the functi
 
 When a node is going to hold a value it is sometimes helpful to provide a sample value, for example:
 
-<pre><code data-language="java">
+<pre><code data-language="json">
     {
       ...
       {

@@ -11,7 +11,7 @@ An Atlas Schema is divided into a number of basic sections,  these sections are 
 
 The first part of the schema is a typical header, this is where we define the version of the Atlas schema as well as some top level information regarding this schema.
 
-<pre><code data-language="javascript">
+<pre><code data-language="json">
     {
       "atlasVersion":"#{site.release.atlas_version}",
       "namespace":"com.mycompany",
@@ -46,7 +46,7 @@ This is the version for your schema representation,  you should always keep vers
 
 ### Organization
 
-<pre><code data-language="javascript">
+<pre><code data-language="json">
     {
       ...
       "organization":{
@@ -66,7 +66,7 @@ It is important when sharing a schema to tell the world a little about who you a
 
 ### Contributors
 
-<pre><code data-language="javascript">
+<pre><code data-language="json">
     {
       ...
       "contributors":[{
@@ -96,7 +96,7 @@ We have a set of attributes which can be shared for a contributor:
 
 ### License
 
-<pre><code data-language="javascript">
+<pre><code data-language="json">
     {
       ...
       "license":{
@@ -118,7 +118,7 @@ Since some of the schema's that are used with Atlas are planned to be open sourc
 
 ### Revision Control System
 
-<pre><code data-language="javascript">
+<pre><code data-language="json">
     {
       ...
       "revisionControlSystem":{
@@ -136,7 +136,7 @@ This allows the schema to include metadata around where the revision control sys
 
 ### Issue Tracker
 
-<pre><code data-language="javascript">
+<pre><code data-language="json">
     {
       ...
       "issueTracker":{
@@ -155,7 +155,7 @@ This allows the schema to include metadata around where the issue tracking syste
 
 ### Nodes
 
-<pre><code data-language="javascript">
+<pre><code data-language="json">
     {
       ...
       "nodes":[{

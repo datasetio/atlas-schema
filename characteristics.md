@@ -9,16 +9,14 @@ On a node we also support the setting of characteristics,  this defines certain 
 
 Below we can see an example of additional characteristics being applied to a node.
 
-<pre><code data-language="java">
+<pre><code data-language="json">
     {
       ...
       {
             "name": "AddressType",
             "documentation": "A collection of characters",
             "extend" : "io.dataset.atlas.type.String"
-            "characteristics": {
-                "length": "25",
-                "enumeration" : [ "Home", "Work" ]
+            "characteristics": {"length": "25","enumeration" : [ "Home", "Work" ]
             }
         },
       ....
@@ -32,3 +30,19 @@ The available characteristics are:
 * enumeration - the domain of values valid for the node datum
 * max - a numerical value that is the maximum valid value for the node datum
 * min - a numerical value that is the minimum valid value for the node datum
+
+enumerations can also detail meanings for codes e.g.
+
+<pre><code data-language="json">
+    {
+      ...
+      {
+            "name": "ImportantCurrencyCodes",
+            "documentation": "Important ISO Currency Code",
+            "extend" : "io.dataset.atlas.type.String"
+            "characteristics": {"length": "3","enumeration" : [ "USD"->"United States Dollar", "GBP"->"UK Pounds Sterling"]
+            }
+        },
+      ....
+    }
+</code></pre>
