@@ -32,7 +32,7 @@
         </div>
         <div class='span7'>
           <h1 style='margin-top:38px'>Atlas Schema Definition</h1>
-          <h4 style='margin-top:-10px'>v2.0</h4>
+          <h4 style='margin-top:-10px'>v1.1.0</h4>
         </div>
       </div>
       <div class='row'>
@@ -65,9 +65,71 @@
           </a>
         </div>
         <div class='span9'>
-          <h3>We have moved</h3>
-          
-          <p>Check out our <a href="http://developer.dataset.io">new home</a></p>
+          <h3>Nodes</h3>
+
+<p>A node is a representation of a peice of understanding around data,  this can be almost anything and is purposefully abstract.  A node on its only simply represents an item of knowlegde,  for example you might know that you have a person.  Therefore you would create a Person.</p>
+
+<pre><code data-language="javascript">&#x000A;    {&#x000A;      ...&#x000A;      {&#x000A;        "name":"Person",&#x000A;        "description":"A Person",&#x000A;        "documentation":"A human being"&#x000A;      },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
+
+
+<p>Or you might decide that you want to have a Name.</p>
+
+<pre><code data-language="javascript">&#x000A;    {&#x000A;      ...&#x000A;      {&#x000A;        "name":"Name",&#x000A;        "description":"A Name",&#x000A;        "documentation":"A word or collection of words used to identify something"&#x000A;      },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
+
+
+<p>And then you might decide that you want a Person to have a name,  thus you would create a relationship between a person and a name.</p>
+
+<pre><code data-language="javascript">&#x000A;    {&#x000A;      ...&#x000A;      {&#x000A;        "name":"Person",&#x000A;        "description":"A Person",&#x000A;        "documentation":"A human being",&#x000A;        "relationships" : ["Name"]&#x000A;      },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
+
+
+<p>At this level you are able to build up an abstract representation of the understand you have about the data you want to model.  Typically however you will want to start providing more information on the structure of this data as you do,  often it starts when we try to specify what type a node might be.</p>
+
+<p>In this sense we use the term type to reference if something is a string of characters, a date, a number etc.  We do this so that we are able to understand how to move things out to database technologies,  however in Atlas we do not have a fixed set of base types (sometimes call Primitives), since everything is a Node.   Therefore if you want to specify that Name, for example, is a String type you would use one of the Dataset IO core nodes.</p>
+
+<p>The core nodes are a set of Nodes defined in an internal Schema which is at the heart of Atlas,  you can see the schema <a href="https://github.com/datasetio/atlas-types/blob/master/schema.json">here</a>.  We have defined a set of basic Nodes that represent the core types at the heart of most database technologies and you can use them in your Nodes by extending them.</p>
+
+<pre><code data-language="javascript">&#x000A;    {&#x000A;      ...&#x000A;      {&#x000A;        "name":"Name",&#x000A;        "description":"A Name",&#x000A;        "documentation":"A word or collection of words used to identify something",&#x000A;        "extend" : "io.dataset.atlas.type.String"&#x000A;      },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
+
+
+<p>By including this core type we are able to not see that the Name is a String, since our export technology is aware of these core types you are able to then generate SQL schemas or XML schemas which would port this String representation into the appropriate type.</p>
+
+<h3>Relationship Cardinality</h3>
+
+<p>In our earlier example we had a simple relationship between a Person and a Name,  in this case a Person has one name.  The default when we specify a relationship is that there is a single instance of the relationship.  However,  often we might have situations where it isn't a one to one relationship.</p>
+
+<p>Lets add another couple of nodes to our world and see what happens,  First lets create some parts of an Address and then create an Address.</p>
+
+<pre><code data-language="java">&#x000A;    {&#x000A;      ...&#x000A;      {&#x000A;        "name":"Street",&#x000A;        "description":"Street Name",&#x000A;        "documentation":"The name of a street",&#x000A;        "extend" : "io.dataset.atlas.type.String"&#x000A;      },&#x000A;      {&#x000A;        "name":"ZipCode",&#x000A;        "description":"Zip Code",&#x000A;        "documentation":"A US Zip Code",&#x000A;        "extend" : "io.dataset.atlas.type.String"&#x000A;      },&#x000A;      {&#x000A;        "name":"Address",&#x000A;        "description":"Address",&#x000A;        "documentation":"An addresss",&#x000A;        "relationships" : ["Street","ZipCode"]&#x000A;      },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
+
+
+<p>Above we have created a basic model to represent a Street and a Zipcode (both are extended from our core String node) and then an Address which has one Street and one ZipCode.  Now lets say that we want to show that a Person can have zero or many Addresses.  We would need to add Address to the relationships on Person.</p>
+
+<pre><code data-language="java">&#x000A;    {&#x000A;      ...&#x000A;      {&#x000A;        "name":"Person",&#x000A;        "description":"A Person",&#x000A;        "documentation":"A human being",&#x000A;        "relationships" : ["Name","Address[0..]"]&#x000A;      },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
+
+
+<p>Note that now on the Address in the relationships we include a classifier which highlights the cardinality of the relationship - in this case [0..].  Atlas uses this Cardinality to represent that there can be 0 to (..) any number of instances of Address related to Person,  this would typically be referred to as a one-to-many relationship.</p>
+
+<p>Cardinality definitions in Atlas can be shown in a few different ways.  For example:</p>
+
+<ul>
+<li>[1..10] means that must be at least one and there can be a maximum of 10</li>
+<li>[0..] there can be no relationship or any number of relationships</li>
+<li>[0..1] there can be no relationship or there can be only one,  this is the default</li>
+<li>[1..1] there must be at one and only one relationship</li>
+</ul>
+
+
+<h3>Datums</h3>
+
+<p>A node can optionaly hold the flag to determine if it is a datum.  Datum is where a node can hold a value.  By default a node is not defined as a datum since it is an abstract representation of something,  however you can specify datum = true on the node in order to make it capable of holding a value.</p>
+
+<p>Note that typically when modeling you would use the extend to inherit the functionality of an existing mode, often from the base Atlas types.  If you extend something like io.dataset.atlas.type.String then your node will be a datum because io.data.atlas.type.String is defined as a datum.</p>
+
+<h3>Sample Values</h3>
+
+<p>When a node is going to hold a value it is sometimes helpful to provide a sample value, for example:</p>
+
+<pre><code data-language="java">&#x000A;    {&#x000A;      ...&#x000A;      {&#x000A;      "name":"Name",&#x000A;      "description":"A Name",&#x000A;      "documentation":"A word or collection of words used to identify something",&#x000A;      "extend" : "io.dataset.atlas.type.String"&#x000A;      "sampleValue" : "Philip"&#x000A;    },&#x000A;      ....&#x000A;    }&#x000A;</code></pre>
         </div>
       </div>
     </div>
