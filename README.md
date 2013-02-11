@@ -1,5 +1,5 @@
 ### Atlas Schema Documentation
 
-This is an [Awestruct](http://awestruct.org/) website used to build the documentation for the [Dataset IO](http://dataset.io) Atlas Schema.
+### We have moved
 
-For more information check out the [site](http://datasetio.github.com/atlas-schema).
+Check out our (new home)[http://developer.dataset.io]
